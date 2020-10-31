@@ -19,8 +19,120 @@ function appMenu() {
     function  createTeam(){
         // inquirer to ask which type of employee you want to create and runs the relevant function
     }
-    function createManager() {
+    function createIntern() {
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "internName",
+                message: "What is your intern's name",
+                validate: answer => {
+                    if(answer !== "") {
+                        return true
+                    }
 
+                    return "Please enter a valid name"
+                }
+            },
+            {
+                type: "input",
+                name: "internId",
+                message: "What is your intern's ID?",
+                validate: answer => {
+                    if(answer !== "") {
+                        return true
+                    }
+
+                    return "Please enter a valid ID"
+                }
+            },
+            {
+                type: "input",
+                name: "internEmail",
+                message: "What is your employee's email?",
+                validate: answer => {
+                    if(answer !== "") {
+                        return true
+                    }
+
+                    return "Please enter a valid email"
+                }
+            },
+            {
+                type: "input",
+                name: "internSchool",
+                message: "What is your intern's school?",
+                validate: answer => {
+                    if(answer !== "") {
+                        return true
+                    }
+
+                    return "Please enter a valid school"
+                }
+            }
+        ]).then(answers => {
+            const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool)
+            teamMembers.push(manager)
+            arrayId.push(answers.managerId)
+            // run a function here that creates the entire "team" prompting you to create another employee
+        })
+    }
+    function createManager() {
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "managerName",
+                message: "What is your manager's name",
+                validate: answer => {
+                    if(answer !== "") {
+                        return true
+                    }
+
+                    return "Please enter a valid name"
+                }
+            },
+            {
+                type: "input",
+                name: "managerId",
+                message: "What is your manager's ID?",
+                validate: answer => {
+                    if(answer !== "") {
+                        return true
+                    }
+
+                    return "Please enter a valid ID"
+                }
+            },
+            {
+                type: "input",
+                name: "managerEmail",
+                message: "What is your employee's email?",
+                validate: answer => {
+                    if(answer !== "") {
+                        return true
+                    }
+
+                    return "Please enter a valid email"
+                }
+            },
+            {
+                type: "input",
+                name: "managerOffice",
+                message: "What is your managers's office number?",
+                validate: answer => {
+                    if(answer !== "") {
+                        return true
+                    }
+
+                    return "Please enter a valid office"
+                }
+            }
+        ]).then(answers => {
+            const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.manageroffice)
+            teamMembers.push(manager)
+            arrayId.push(answers.managerId)
+            // run a function here that creates the entire "team" prompting you to create another employee
+        })
+    
     }
 
     function createEngineer() {

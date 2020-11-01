@@ -38,6 +38,7 @@ function appMenu() {
                 createIntern()
             }
             else {
+                console.log("Success! You built your team page!")
                 buildTeam()
             }
         })

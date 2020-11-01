@@ -16,8 +16,31 @@ const teamMembers = []
 const arrayId = []
 
 function appMenu() {
-    function  createTeam(){
+    createTeam();
+    function createTeam() {
         // inquirer to ask which type of employee you want to create and runs the relevant function
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "employeeType",
+                message: "what employee type would you like to add?",
+                choices: ["manager", "engineer", "intern", "none"],
+                
+            }
+        ]).then(answer => {
+            if(answer.employeeType === "manager") {
+                createManager()
+            }
+            if(answer.employeeType === "engineer") {
+                createEngineer()
+            }
+            if(answer.employeeType === "intern") {
+                createIntern()
+            }
+            else {
+                buildTeam()
+            }
+        })
     }
     function createIntern() {
         inquirer.prompt([
@@ -26,7 +49,7 @@ function appMenu() {
                 name: "internName",
                 message: "What is your intern's name",
                 validate: answer => {
-                    if(answer !== "") {
+                    if (answer !== "") {
                         return true
                     }
 
@@ -38,7 +61,7 @@ function appMenu() {
                 name: "internId",
                 message: "What is your intern's ID?",
                 validate: answer => {
-                    if(answer !== "") {
+                    if (answer !== "") {
                         return true
                     }
 
@@ -50,7 +73,7 @@ function appMenu() {
                 name: "internEmail",
                 message: "What is your employee's email?",
                 validate: answer => {
-                    if(answer !== "") {
+                    if (answer !== "") {
                         return true
                     }
 
@@ -62,7 +85,7 @@ function appMenu() {
                 name: "internSchool",
                 message: "What is your intern's school?",
                 validate: answer => {
-                    if(answer !== "") {
+                    if (answer !== "") {
                         return true
                     }
 
@@ -71,9 +94,10 @@ function appMenu() {
             }
         ]).then(answers => {
             const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool)
-            teamMembers.push(manager)
-            arrayId.push(answers.managerId)
+            teamMembers.push(intern)
+            arrayId.push(answers.internId)
             // run a function here that creates the entire "team" prompting you to create another employee
+            createTeam()
         })
     }
     function createManager() {
@@ -83,7 +107,7 @@ function appMenu() {
                 name: "managerName",
                 message: "What is your manager's name",
                 validate: answer => {
-                    if(answer !== "") {
+                    if (answer !== "") {
                         return true
                     }
 
@@ -95,7 +119,7 @@ function appMenu() {
                 name: "managerId",
                 message: "What is your manager's ID?",
                 validate: answer => {
-                    if(answer !== "") {
+                    if (answer !== "") {
                         return true
                     }
 
@@ -107,7 +131,7 @@ function appMenu() {
                 name: "managerEmail",
                 message: "What is your employee's email?",
                 validate: answer => {
-                    if(answer !== "") {
+                    if (answer !== "") {
                         return true
                     }
 
@@ -119,7 +143,7 @@ function appMenu() {
                 name: "managerOffice",
                 message: "What is your managers's office number?",
                 validate: answer => {
-                    if(answer !== "") {
+                    if (answer !== "") {
                         return true
                     }
 
@@ -131,8 +155,9 @@ function appMenu() {
             teamMembers.push(manager)
             arrayId.push(answers.managerId)
             // run a function here that creates the entire "team" prompting you to create another employee
+            createTeam();
         })
-    
+
     }
 
     function createEngineer() {
@@ -142,7 +167,7 @@ function appMenu() {
                 name: "engineerName",
                 message: "What is your engineer's name",
                 validate: answer => {
-                    if(answer !== "") {
+                    if (answer !== "") {
                         return true
                     }
 
@@ -154,7 +179,7 @@ function appMenu() {
                 name: "engineerId",
                 message: "What is your employee's ID?",
                 validate: answer => {
-                    if(answer !== "") {
+                    if (answer !== "") {
                         return true
                     }
 
@@ -166,7 +191,7 @@ function appMenu() {
                 name: "engineerEmail",
                 message: "What is your employee's email?",
                 validate: answer => {
-                    if(answer !== "") {
+                    if (answer !== "") {
                         return true
                     }
 
@@ -178,7 +203,7 @@ function appMenu() {
                 name: "engineerGithub",
                 message: "What is your employee's Github?",
                 validate: answer => {
-                    if(answer !== "") {
+                    if (answer !== "") {
                         return true
                     }
 
@@ -190,21 +215,21 @@ function appMenu() {
             teamMembers.push(engineer)
             arrayId.push(answers.engineerId)
             // run a function here that creates the entire "team" prompting you to create another employee
+            createTeam();
         })
+
     }
 
     function buildTeam() {
         // Create the output directory if the output path doesn't exist
         if (!fs.existsSync(OUTPUT_DIR)) {
-          fs.mkdirSync(OUTPUT_DIR)
+            fs.mkdirSync(OUTPUT_DIR)
         }
         fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
-      }
-
-      
+    }
 }
 
-appMenu()
+appMenu();
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
